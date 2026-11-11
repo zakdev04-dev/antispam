@@ -1,10 +1,10 @@
 require("dotenv").config();
 
-const BOT_TOKEN = process.env.BOT_TOKEN || "";
+const BOT_TOKEN = process.env.BOT_TOKEN || process.env.DOT_TOKEN || "";
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/anti_spam_bot";
 const PORT = parseInt(process.env.PORT || "8080", 10);
 
-const ADMINS_RAW = process.env.ADMINS || "";
+const ADMINS_RAW = process.env.ADMINS || process.env.ADMIN_ID || "";
 const ADMINS = ADMINS_RAW.split(",")
   .map((id) => id.trim())
   .filter((id) => /^\d+$/.test(id))
