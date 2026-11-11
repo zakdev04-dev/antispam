@@ -1,0 +1,20 @@
+	admin panel:
+        	kanal ulash
+		kanallarni boshqarish
+		statistika
+		video joylash
+		xabar yuborish
+		reklama joylash
+		vazifa qo'shish
+		referal narxi
+		vazfifa narxi
+	
+	foydalanuvchi interfeys: tugmalar
+		video qo'llanma
+	kabinet		taklif havola
+	reklama 	bot haqida
+		yordam
+		
+		
+
+	

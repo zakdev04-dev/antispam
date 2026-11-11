@@ -1,0 +1,15 @@
+yangi loyiha: admin panelida: majburiy kanal ulash va boshqarish bo'limlari, tugmaga nom: < Obuna b'lish >.  foydalanuvchi obuna bo'lgan kanallari ko'rinme qolishi kera. linkli.shxsiy xavolali, zayafka yuborgan foydalanuvchini tekshrishi kerak. tashqi link ham qoshish, nomi tugmalar bilan bir xil. Statistik bo'limi qancha foydalanuvchi bor: bloklagan, activ. qaysi kun bo'lsa shu kunda nechta qoshilganligi. nechta kanal ulanganligi bo'lishi kerak, foydalanuvchiliar uchun video qo'llanma bolimiga video joylash.  foydalanuvchilar uchun reklama  bo'limiga reklama joylash, tugmali yo yoq soralishi. foydalanuvchilarga xabar yuborish bo'limi tugmali/yo yoq.private kanal qoshish basa uchun . foydalanuvchi : /start bosgana  foydalanuvchi bilan salomlashib kontaktini ulashish soraslin, kontakt ulashgach  majburiy obuna  chiqsin barchasiga obuna bo'lgach foydalanuvchi uchun interfeys ochilsin, foydalanuvchi interfeys: tugmalar
+		video qo'llanma
+	kabinet		taklif havola
+    reklama 	bot haqida
+	        	yordam
+		video qo'llanma bo'limida admin joylagan qo'llanmani olish uchun bo'lim,  tugma bosilganda xisobida 15 000 uzs bo;lishi va bo'lsa balansidan yechvolishi  kerak. kabinet  foydalanuvchi malumotlari chiqadi: ismi, user name, id,nomeri,xisobi, botga qachon qoshilganligi, post pastida xisobni to'ldirish tugmasi, vazifa tugmasi bo'lsin: xisobni to'ldirish tugmasi bosilganda qanchaga to'ldirilishi soralsi, kiritilgan summadan keyin {Hurmatli name siz admin kiritgan kart, foydalanuvchi kiritgan summa , to'ldiring  va to'lov chek ni yuboring }; yuborgach admiga xabari kelsin admin tekshrib tastiqlasa hisobiga qoshilsin aks holda yo'q, tastiqlangan / bekor qilingan xabar foydalanuvchiga kelsin. vazifa bo'lim bosilganda admin kiritgan vazifa  chiqsin bajarilsa balansiga admin kiritgan vazifa narxi qo'shilsin. 30-kun ichida bajarilgan vazifa qaytarib olinsa balansidan admin kiritgan narx + 250 uzs. vaifa: telegram kanal,grupa,zayafkali kanal. taklif havola bo'limi foydalanuvchi do'stlarni taklif qilib balansini to'ldirishi mumkun foydalanuvchi bosganda tugmani  creativ taklif reklama psotini yasab qoy. reklama bo'limi admin joylagan reklama qoyiladi. bot haqida bo;limiga bot haqida ishlatish va avfzalliklari haqida malumot joyla. yordam admin kiritgan admin adminga yordam taklif va murojat uchun murojat qilishi ga post ozib joyla. admin panel:
+        	kanal ulash
+		kanallarni boshqarish
+		statistika
+		video joylash
+		xabar yuborish
+		reklama joylash
+		vazifa qo'shish
+		referal narxi
+		vazfifa narxi
