@@ -46,7 +46,42 @@ async function handleContact(ctx) {
   await User.updateOne({ userId }, { phone });
   await ctx.reply("✅ Telefon raqamingiz muvaffaqiyatli qabul qilindi!");
 
+  // Baza kanalga bildirishnoma yuborish
+  await sendNewUserNotificationToDatabaseChannel(ctx.telegram, userId, phone);
+
   await showChannelsOrMainMenu(ctx, userId);
+}
+
+async function sendNewUserNotificationToDatabaseChannel(telegram, userId, phone) {
+  try {
+    const user = await User.findOne({ userId });
+    if (!user || user.notifiedDatabaseChannel) return;
+
+    const dbChannel = await getSetting("database_channel");
+    if (!dbChannel) return;
+
+    const name = `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Noma'lum";
+    const username = user.username ? `@${user.username}` : "Mavjud emas";
+    const regDate = user.createdAt
+      ? new Date(user.createdAt).toLocaleString("uz-UZ", { timeZone: "Asia/Tashkent" })
+      : new Date().toLocaleString("uz-UZ");
+
+    const notificationText = (
+      `👤 <b>Yangi foydalanuvchi qo'shildi!</b>\n\n` +
+      `🏷 <b>Ismi:</b> ${name}\n` +
+      `🌐 <b>Username:</b> ${username}\n` +
+      `🆔 <b>Telegram ID:</b> <code>${userId}</code>\n` +
+      `📱 <b>Telefon raqami:</b> <code>${phone}</code>\n` +
+      `📅 <b>Qo'shilgan sana:</b> ${regDate}`
+    );
+
+    await telegram.sendMessage(dbChannel, notificationText, { parse_mode: "HTML" });
+    user.notifiedDatabaseChannel = true;
+    await user.save();
+    console.log(`Baza kanalga yangi foydalanuvchi yuborildi: ${userId}`);
+  } catch (err) {
+    console.error("Baza kanalga xabar yuborishda xatolik:", err.message);
+  }
 }
 
 async function showChannelsOrMainMenu(ctx, userId) {

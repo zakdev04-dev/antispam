@@ -100,7 +100,7 @@ function adminMainKeyboard() {
     ["📹 Video joylash", "📢 Reklama joylash"],
     ["📋 Vazifa qo'shish", "🗂 Vazifalarni boshqarish"],
     ["💰 Referal narxi", "💵 Vazifa narxi"],
-    ["💳 Karta ma'lumotlari"],
+    ["💳 Karta ma'lumotlari", "📁 Baza kanali"],
     ["ℹ️ Bot haqida matni", "🆘 Yordam matni"],
     ["🔙 Foydalanuvchi rejimi"]
   ]).resize();

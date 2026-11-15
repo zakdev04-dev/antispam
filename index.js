@@ -64,6 +64,7 @@ const {
   handleStartSetAd,
   handleStartSetAbout,
   handleStartSetHelp,
+  handleStartSetDatabaseChannel,
   handleAdminSettingsInput
 } = require("./handlers/adminSettings");
 const { handleChatJoinRequest, handleMyChatMember } = require("./handlers/events");
@@ -139,6 +140,7 @@ bot.action("broadcast_cancel", (ctx) => isAdmin(ctx.from.id) && handleBroadcastC
 bot.hears("💰 Referal narxi", (ctx) => isAdmin(ctx.from.id) && handleStartSetRefPrice(ctx));
 bot.hears("💵 Vazifa narxi", (ctx) => isAdmin(ctx.from.id) && handleStartSetTaskPrice(ctx));
 bot.hears("💳 Karta ma'lumotlari", (ctx) => isAdmin(ctx.from.id) && handleStartSetCard(ctx));
+bot.hears("📁 Baza kanali", (ctx) => isAdmin(ctx.from.id) && handleStartSetDatabaseChannel(ctx));
 bot.hears("📹 Video joylash", (ctx) => isAdmin(ctx.from.id) && handleStartSetVideoGuide(ctx));
 bot.hears("📢 Reklama joylash", (ctx) => isAdmin(ctx.from.id) && handleStartSetAd(ctx));
 bot.hears("ℹ️ Bot haqida matni", (ctx) => isAdmin(ctx.from.id) && handleStartSetAbout(ctx));

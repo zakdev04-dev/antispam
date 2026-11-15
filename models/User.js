@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
   referralRewarded: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true },
   hasVideoAccess: { type: Boolean, default: false },
+  notifiedDatabaseChannel: { type: Boolean, default: false },
   subscribedExternalLinks: [{ type: String }],
   createdAt: { type: Date, default: Date.now }
 });

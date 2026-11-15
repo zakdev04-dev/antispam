@@ -23,6 +23,7 @@ async function ensureDefaultSettings() {
   const defaults = {
     referral_price: config.DEFAULT_REFERRAL_PRICE,
     task_price: config.DEFAULT_TASK_PRICE,
+    database_channel: null,
     card_number: "8600 0000 0000 0000",
     card_holder: "ADMIN CARD",
     video_guide: {

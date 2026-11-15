@@ -82,6 +82,19 @@ async function handleStartSetHelp(ctx) {
   );
 }
 
+// 8. Baza kanalini sozlash
+async function handleStartSetDatabaseChannel(ctx) {
+  const current = (await getSetting("database_channel")) || "Ulanmagan";
+  setState(ctx.from.id, "SET_DATABASE_CHANNEL");
+  await ctx.replyWithHTML(
+    `📁 <b>Baza kanalini sozlash</b>\n\n` +
+    `Hozirgi ulangan kanal: <code>${current}</code>\n\n` +
+    `Yangi baza kanalining <b>ID</b> sini (masalan: <code>-1001234567890</code>) yoki <b>@username</b> sini yuboring:\n\n` +
+    `<i>⚠️ Muhim: Bot ushbu kanalda administrator bo'lishi va xabar yozish huquqiga ega bo'lishi shart!</i>`,
+    cancelKeyboard()
+  );
+}
+
 async function handleAdminSettingsInput(ctx) {
   const userId = ctx.from.id;
   const userState = getState(userId);
@@ -256,6 +269,32 @@ async function handleAdminSettingsInput(ctx) {
     return true;
   }
 
+  // Baza kanalini saqlash
+  if (userState.state === "SET_DATABASE_CHANNEL") {
+    let channelId = text;
+    if ((text.startsWith("-") && /^\d+$/.test(text.slice(1))) || /^\d+$/.test(text)) {
+      channelId = parseInt(text, 10);
+    }
+
+    try {
+      const chat = await ctx.telegram.getChat(channelId);
+      channelId = chat.id;
+    } catch (err) {
+      console.warn("Baza kanalini tekshirishda ogohlantirish:", err.message);
+    }
+
+    await setSetting("database_channel", channelId);
+    clearState(userId);
+    await ctx.replyWithHTML(
+      `✅ <b>Baza kanali muvaffaqiyatli saqlandi!</b>\n\n` +
+      `Kanal: <code>${channelId}</code>\n\n` +
+      `Endi botga yangi foydalanuvchi qo'shilib kontaktini ulashganda, ` +
+      `uning ma'lumotlari ushbu kanalga bildirishnoma bo'lib yuboriladi.`,
+      adminMainKeyboard()
+    );
+    return true;
+  }
+
   return false;
 }
 
@@ -267,5 +306,6 @@ module.exports = {
   handleStartSetAd,
   handleStartSetAbout,
   handleStartSetHelp,
+  handleStartSetDatabaseChannel,
   handleAdminSettingsInput
 };
