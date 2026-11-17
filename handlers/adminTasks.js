@@ -2,6 +2,14 @@ const { Task, getSetting } = require("../database");
 const { taskTypeInlineKb, manageTasksKeyboard, adminMainKeyboard, cancelKeyboard } = require("../keyboards/keyboards");
 const { getState, setState, clearState, updateData } = require("../state");
 
+function escapeHTML(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 async function handleStartAddTask(ctx) {
   clearState(ctx.from.id);
   await ctx.replyWithHTML(
@@ -121,14 +129,29 @@ async function handleAddTaskText(ctx) {
     });
 
     clearState(userId);
-    await ctx.replyWithHTML(
-      `✅ <b>Yangi vazifa muvaffaqiyatli qo'shildi!</b>\n\n` +
-      `📌 Nomi: <b>${title}</b>\n` +
-      `🔖 Turi: <code>${taskType}</code>\n` +
-      `💰 Mukofot: <b>${reward.toLocaleString()} UZS</b>\n` +
-      `🔗 Havola: ${url}`,
-      adminMainKeyboard()
-    );
+    const safeTitle = escapeHTML(title);
+    const safeType = escapeHTML(taskType);
+    const safeUrl = escapeHTML(url);
+
+    try {
+      await ctx.replyWithHTML(
+        `✅ <b>Yangi vazifa muvaffaqiyatli qo'shildi!</b>\n\n` +
+        `📌 Nomi: <b>${safeTitle}</b>\n` +
+        `🔖 Turi: <code>${safeType}</code>\n` +
+        `💰 Mukofot: <b>${reward.toLocaleString()} UZS</b>\n` +
+        `🔗 Havola: ${safeUrl}`,
+        adminMainKeyboard()
+      );
+    } catch (e) {
+      await ctx.reply(
+        `✅ Yangi vazifa muvaffaqiyatli qo'shildi!\n\n` +
+        `📌 Nomi: ${title}\n` +
+        `🔖 Turi: ${taskType}\n` +
+        `💰 Mukofot: ${reward.toLocaleString()} UZS\n` +
+        `🔗 Havola: ${url}`,
+        adminMainKeyboard()
+      );
+    }
     return true;
   }
 

@@ -2,6 +2,14 @@ const { Channel } = require("../database");
 const { channelTypeInlineKb, manageChannelsKeyboard, adminMainKeyboard, cancelKeyboard } = require("../keyboards/keyboards");
 const { getState, setState, clearState, updateData } = require("../state");
 
+function escapeHTML(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 async function handleStartAddChannel(ctx) {
   clearState(ctx.from.id);
   await ctx.replyWithHTML(
@@ -103,8 +111,15 @@ async function handleAddChannelText(ctx) {
 
   // 3. URL
   if (userState.state === "ADD_CH_URL") {
-    if (!text.startsWith("http://") && !text.startsWith("https://") && !text.startsWith("t.me")) {
-      await ctx.reply("⚠️ Iltimos, haqiqiy URL manzil kiriting (https://...):");
+    let cleanUrl = text;
+    if (cleanUrl.startsWith("@")) {
+      cleanUrl = "https://t.me/" + cleanUrl.slice(1);
+    } else if (cleanUrl.startsWith("t.me/")) {
+      cleanUrl = "https://" + cleanUrl;
+    }
+
+    if (!cleanUrl.startsWith("http://") && !cleanUrl.startsWith("https://")) {
+      await ctx.reply("⚠️ Iltimos, haqiqiy havola (URL) kiriting (masalan: https://t.me/...):");
       return true;
     }
 
@@ -115,19 +130,35 @@ async function handleAddChannelText(ctx) {
       title,
       type: chType,
       channelId,
-      url: text,
+      url: cleanUrl,
       buttonName: btnName
     });
 
     clearState(userId);
-    await ctx.replyWithHTML(
-      `✅ <b>Kanal muvaffaqiyatli ulandi!</b>\n\n` +
-      `📌 Nomi: <b>${title}</b>\n` +
-      `🔖 Turi: <code>${chType}</code>\n` +
-      `🔗 Havola: ${text}\n` +
-      `🔘 Tugma nomi: <b>${btnName}</b>`,
-      adminMainKeyboard()
-    );
+
+    const safeTitle = escapeHTML(title);
+    const safeType = escapeHTML(chType);
+    const safeUrl = escapeHTML(cleanUrl);
+
+    try {
+      await ctx.replyWithHTML(
+        `✅ <b>Kanal muvaffaqiyatli ulandi!</b>\n\n` +
+        `📌 Nomi: <b>${safeTitle}</b>\n` +
+        `🔖 Turi: <code>${safeType}</code>\n` +
+        `🔗 Havola: ${safeUrl}\n` +
+        `🔘 Tugma nomi: <b>&lt; Obuna bo'lish &gt;</b>`,
+        adminMainKeyboard()
+      );
+    } catch (e) {
+      await ctx.reply(
+        `✅ Kanal muvaffaqiyatli ulandi!\n\n` +
+        `📌 Nomi: ${title}\n` +
+        `🔖 Turi: ${chType}\n` +
+        `🔗 Havola: ${cleanUrl}\n` +
+        `🔘 Tugma nomi: < Obuna bo'lish >`,
+        adminMainKeyboard()
+      );
+    }
     return true;
   }
 

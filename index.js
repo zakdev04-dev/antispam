@@ -76,6 +76,11 @@ if (!config.BOT_TOKEN) {
 
 const bot = new Telegraf(config.BOT_TOKEN);
 
+// Xatoliklarni tutib qolish (Bot crash bo'lmasligi uchun)
+bot.catch((err, ctx) => {
+  console.error(`Telegram xatoligi (${ctx ? ctx.updateType : "noma'lum"}):`, err.message || err);
+});
+
 // Express Health Check server (Render.com port binding uchun)
 const app = express();
 app.get("/", (req, res) => res.send("OK - Anti Spam Bot is running (Node.js)!"));
